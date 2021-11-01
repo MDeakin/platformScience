@@ -11,7 +11,7 @@
     "url": "git+https://github.com/MDeakin/platformScience.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "MattDeakin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MDeakin/platformScience/issues"
@@ -20,5 +20,8 @@
   "devDependencies": {
     "codeceptjs": "^3.1.3",
     "playwright": "^1.16.2"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }

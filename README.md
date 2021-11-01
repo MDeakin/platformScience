@@ -31,6 +31,7 @@ You must spin up the service locally using the instructions contained in the bit
 
 # Requirements:
 - Node
+- Axios
 
 # Installation instructions:
 ```
