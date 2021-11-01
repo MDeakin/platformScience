@@ -1,0 +1,24 @@
+{
+  "name": "platformScience",
+  "version": "1.0.0",
+  "description": "Code test for Platform Science.",
+  "main": "codecept.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MDeakin/platformScience.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MDeakin/platformScience/issues"
+  },
+  "homepage": "https://github.com/MDeakin/platformScience#readme",
+  "devDependencies": {
+    "codeceptjs": "^3.1.3",
+    "playwright": "^1.16.2"
+  }
+}
