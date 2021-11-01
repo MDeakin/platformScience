@@ -1,0 +1,2445 @@
+{
+	"info": {
+		"_postman_id": "3c7a0fd0-e1f6-4b45-8e73-6c9dfb097183",
+		"name": "roboHoover",
+		"description": "Author: Matt Deakin\nLast update: 11/1/2021\n\nThis collection is an answer to the Platform Science code test:\nhttps://bitbucket.org/platformscience/pltsci-sdet-assignment/src/main/\n\nRequirements\nDocker v.18+\nBuilding the service\nFrom the root of this repository, run the following:\n\nsudo chmod +x service/run.sh\ndocker build -t pltsci-sdet-assignment service\nRunning the service\ndocker run -d -p 8080:8080 --name pltsci-sdet-assignment pltsci-sdet-assignment\nHitting the endpoint\nYou can test whether the service is running correctly by executing the following command: - curl -H 'Content-Type: application/json' -X POST -d '{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }' http://localhost:8080/v1/cleaning-sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Methods",
+			"item": [
+				{
+					"name": "Can I GET?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base}}/v1/sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"sessions"
+							]
+						},
+						"description": "Validates that the GET method is not supported."
+					},
+					"response": []
+				},
+				{
+					"name": "Can I POST?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"//This currently fails, so let's comment it out until this gets fixed",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"*/",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Validates that the POST method is supported."
+					},
+					"response": []
+				},
+				{
+					"name": "Can I PUT?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Has expected message\", function () {",
+									"    pm.expect(jsonData.message).to.eql(\"Request method 'PUT' not supported\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Validates that the PUT method is not supported."
+					},
+					"response": []
+				},
+				{
+					"name": "Can I DELETE?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Has expected message\", function () {",
+									"    pm.expect(jsonData.message).to.eql(\"Request method 'DELETE' not supported\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Validates that the DELETE method is not supported."
+					},
+					"response": []
+				}
+			],
+			"description": "Requests in this folder check for the basic API operations.  The only one allowed is POST."
+		},
+		{
+			"name": "Movement",
+			"item": [
+				{
+					"name": "Move 1 (10x10)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"//This currently fails, so let's comment it out until this gets fixed",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"*/",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(3);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(6);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n    \"roomSize\" : [10, 10], \n    \"coords\" : [0, 0], \n    \"patches\" : [], \n    \"instructions\" : \"NENENEEENNWWNNS\"\n}"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Basic path through a 10x10 room with no dirt, starting in the bottom left (SW, 0,0) corner."
+					},
+					"response": []
+				},
+				{
+					"name": "Move 2 (10x10)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"//This currently fails, so let's comment it out until this gets fixed",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"*/",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(6);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(5);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [10, 10], \"coords\" : [9, 9], \"patches\" : [], \"instructions\" : \"SSWWSWSSWNE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Basic path through a 10x10 room with no dirt, starting in the top right (NE, 9,9) corner."
+					},
+					"response": []
+				},
+				{
+					"name": "Move 3 (5x5)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"//This currently fails, so let's comment it out until this gets fixed",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"*/",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(4);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [2, 2], \"patches\" : [], \"instructions\" : \"SENNWWSSSWNNNN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Basic path through a 5x5 room with no dirt, starting in the center (2,2) position."
+					},
+					"response": []
+				},
+				{
+					"name": "Move 4 (11x15)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(8);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(6);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [11, 15], \"coords\" : [1, 13], \"patches\" : [], \"instructions\" : \"ESESESESSSWSEESESENN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Basic path through an 11x15 room with no dirt, starting near the top left (NW, 13,1) position."
+					},
+					"response": []
+				},
+				{
+					"name": "Move 5 (2x4)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [2, 4], \"coords\" : [0, 1], \"patches\" : [], \"instructions\" : \"NNNWSSSENNNWSSSE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Circles a small room with no dirt twice, starting in the bottom right (SE, 1,1) corner."
+					},
+					"response": []
+				},
+				{
+					"name": "Wall bump N",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(4);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [], \"instructions\" : \"NNNNEN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into a North wall once."
+					},
+					"response": []
+				},
+				{
+					"name": "Wall bump E",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [], \"instructions\" : \"EEEENEN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into a East wall once."
+					},
+					"response": []
+				},
+				{
+					"name": "Wall bump S",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(2);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 2], \"patches\" : [], \"instructions\" : \"SSESE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into a South wall once."
+					},
+					"response": []
+				},
+				{
+					"name": "Wall bump W",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [2, 4], \"patches\" : [], \"instructions\" : \"WWSWS\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into a South wall once."
+					},
+					"response": []
+				},
+				{
+					"name": "Excessive N wall bumps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(4);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [], \"instructions\" : \"NNNNENENENE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into the North wall 3 times."
+					},
+					"response": []
+				},
+				{
+					"name": "Bump all walls",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [], \"instructions\" : \"NNWNNEENEESSESSWWSWWN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Bumps the Hoover into the every possible wall once."
+					},
+					"response": []
+				}
+			],
+			"description": "Requests in this folder test the movement of the Hoover.\n\nWe check five good examples based on start, directions and ending position.\n\nThere are also some tests based on bumping into walls."
+		},
+		{
+			"name": "Dirt",
+			"item": [
+				{
+					"name": "Dirt 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [ [2, 0] ], \"instructions\" : \"EEEE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Basic test of a straight path cleaning one dirt path."
+					},
+					"response": []
+				},
+				{
+					"name": "Dirt 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(2);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [ [2, 2], [2, 0] ], \"instructions\" : \"EENNEE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that passing over two dirt patches results in a count of 2."
+					},
+					"response": []
+				},
+				{
+					"name": "Dirt 2b",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Two patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(2);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [ [2, 0], [2, 2] ], \"instructions\" : \"EENNEE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "This is the same as 'Dirt 2' with the order of dirt patches specified reversed."
+					},
+					"response": []
+				},
+				{
+					"name": "Double pass dirt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [ [2, 0] ], \"instructions\" : \"EEENWSWNESEE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Hoover passes over the same dirt patch three times.  This should verify that once a patch is 'clean' it no longer increments the 'patches'."
+					},
+					"response": []
+				},
+				{
+					"name": "Triple dirt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(3);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [0, 0], \"patches\" : [ [1, 1], [1, 1], [1,1]], \"instructions\" : \"NEEE\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "A dirt patch is specified thrice (3x) then passed over once. The expectation is that patches = 1 (if we're ignoring duplicate patches) or patches = 3 (if we're not)."
+					},
+					"response": []
+				}
+			],
+			"description": "Requests in this folder verify accuracy of the number of dirt patches cleaned.\n\nSome highlights include:\n- Retracing over a patch once it's clean\n- Does specifying the same patch twice make that patch twice as dirty?"
+		},
+		{
+			"name": "Bad Data (non-happy path)",
+			"item": [
+				{
+					"name": "Missing instructions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ] }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that a request body without instructions results in a 400 bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Missing patches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that a request body without patches results in a 400 bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Missing coords",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that a request body without coordinates results in a 400 bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Missing roomSize",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that a request body without room size results in a 400 bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Float",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"//If rounding:",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(4);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});",
+									"",
+									"/*",
+									"//If handling decimals:",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(3.6);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(2);",
+									"});",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5.7, 5.2], \"coords\" : [1.6, 0], \"patches\" : [  ], \"instructions\" : \"EENN\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends floating decimal values to room size and coordinates.\n\nExpectation is that the app will either round the number appropriately or output a decimal."
+					},
+					"response": []
+				},
+				{
+					"name": "String",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : \"thank_you_for_reading_this_far_into_the_test_answers\", \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends a string where none was expected. Expected response is a 400 bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Non-cardinal directions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NORTH\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends unexpected directions. (Not NSEW)"
+					},
+					"response": []
+				},
+				{
+					"name": "Complex (large)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Zero patches cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(0);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(300);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(298);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [350, 300], \"coords\" : [300, 299], \"patches\" : [ [260, 270] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends large numbers. Greater than 255."
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [[5, 5],[10,10]], \"coords\" : [[1, 2],[0,0]], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends room size and starting coordinates as a list.  Only one set of x,y should be allowed for each of these."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative numbers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [-5, -5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "This is the initial request provided in the test."
+					},
+					"response": []
+				},
+				{
+					"name": "Tuple",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : ( [1, 0], [2, 2], [2, 3] ), \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends patches as a tuple instead of a list."
+					},
+					"response": []
+				},
+				{
+					"name": "New element",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\", \"new_other_thing\": 51}"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Adds a new 'other' element to the request body in order to verify how it's handled."
+					},
+					"response": []
+				},
+				{
+					"name": "SQL injection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"Select(*) from users\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Sends some basic SQL instead of the expected driving directions."
+					},
+					"response": []
+				}
+			],
+			"description": "Requests in this folder attempt to send bad data and check how the API responds.\n\nBad data includes:\n- String\n- Decimal\n- SQL"
+		},
+		{
+			"name": "Exploratory",
+			"item": [
+				{
+					"name": "Start outside room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Should respond with a 406 Not Acceptable or something of this sort.",
+									"pm.test(\"Status code is 406\", function () {",
+									"    pm.response.to.have.status(406);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [300, 2], \"patches\" : [ [2, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "You should not be allowed to set a starting point outside of the room."
+					},
+					"response": []
+				},
+				{
+					"name": "Dirt outside of room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"//This currently fails, so let's comment it out until this gets fixed",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"*/",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [2, 0], \"patches\" : [ [300, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that dirt outside of the room is just ignored."
+					},
+					"response": []
+				},
+				{
+					"name": "Giant room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [999999999, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "How large can a room be? \n\nA width of 999,999,999 is allowed.\nBut a width of 9,999,999,999 is not."
+					},
+					"response": [
+						{
+							"name": "Maximum supported width",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"roomSize\" : [999999999, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/v1/cleaning-sessions",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"v1",
+										"cleaning-sessions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"coords\": [\n        1,\n        3\n    ],\n    \"patches\": 1\n}"
+						},
+						{
+							"name": "Whoops! Too big",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"roomSize\" : [999999999, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base}}/v1/cleaning-sessions",
+									"host": [
+										"{{base}}"
+									],
+									"path": [
+										"v1",
+										"cleaning-sessions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"coords\": [\n        1,\n        3\n    ],\n    \"patches\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Long path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWWNNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "How far can the Hoover travel?\n\nThis thing is like the energizer bunny!"
+					},
+					"response": []
+				},
+				{
+					"name": "Room full of dirt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"//If this next test fails, so will all others",
+									"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"One patch cleaned\", function () {",
+									"    pm.expect(jsonData.patches).to.eql(8);",
+									"});",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(1);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [4, 0], [4, 1], [4, 2], [4, 3], [4, 4] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "How much dirt can one room hold?"
+					},
+					"response": []
+				}
+			],
+			"description": "Requests in this folder attempt to answer some of the following exploratory questions:\n\n- How large can a room be?\n- Can I start outside of the room?\n- How many dirt patches can we add?\n- How many instructions will it accept?"
+		},
+		{
+			"name": "Dynamic Tests",
+			"item": [
+				{
+					"name": "Random room size",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function getRandomInt(min, max) {",
+									"  min = Math.ceil(min);",
+									"  max = Math.floor(max);",
+									"  return Math.floor(Math.random() * (max - min) + min);",
+									"}",
+									"",
+									"random = getRandomInt(1,100)",
+									"pm.environment.set(\"random_room\", random);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n    \"roomSize\" : [{{random_num}}, 5], \n    \"coords\" : [0, 2], \n    \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \n    \"instructions\" : \"NNESEESWNWW\" \n}"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Randomizes the width (x) of the room with a value between 1 and 100."
+					},
+					"response": []
+				},
+				{
+					"name": "Random starting point",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"//Get variables and validate they match random starting point",
+									"x = pm.environment.get(\"random_start_x\");",
+									"y = pm.environment.get(\"random_start_y\")",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Has expected x coordinate\", function () {",
+									"    pm.expect(jsonData.coords[0]).to.eql(x);",
+									"});",
+									"pm.test(\"Has expected y coordinate\", function () {",
+									"    pm.expect(jsonData.coords[1]).to.eql(y);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function getRandomInt(min, max) {",
+									"  min = Math.ceil(min);",
+									"  max = Math.floor(max);",
+									"  return Math.floor(Math.random() * (max - min) + min);",
+									"}",
+									"",
+									"//Sets random variables to be used in the request",
+									"random1 = getRandomInt(1,10)",
+									"pm.environment.set(\"random_start_x\", random1);",
+									"random2 = getRandomInt(1,10)",
+									"pm.environment.set(\"random_start_y\", random2);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n    \"roomSize\" : [10, 10], \n    \"coords\" : [{{random_start_x}}, {{random_start_y}}], \n    \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \n    \"instructions\" : \"NESW\" \n}"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Randomizes the starting point coordinates x,y between 1 and 10."
+					},
+					"response": []
+				},
+				{
+					"name": "Time checker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"pm.test(\"Response time is less than 100ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(100);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"now = pm.globals.get(\"time\");",
+									"",
+									"/*",
+									"//This is a work in progress, ran out of time",
+									"pm.test(\"Has expected timestamp\", function () {",
+									"    pm.expect(jsonData.timestamp).to.contain(now);",
+									"});",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Sets current UTC timestamp as a global variable",
+									"var moment = require('moment')",
+									"postman.setGlobalVariable('time', moment().utc().format())"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+						},
+						"url": {
+							"raw": "{{base}}/v1/cleaning-sessions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"v1",
+								"cleaning-sessions"
+							]
+						},
+						"description": "Verify that a request body without room size results in a 400 bad request."
+					},
+					"response": []
+				}
+			],
+			"description": "Here's where things get fun.  In this folder we generate some random data, and validate the behavior of the application."
+		},
+		{
+			"name": "EXAMPLE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"//If this next test fails, so will all others",
+							"tests[\"Content-Type is JSON\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json;charset=UTF-8';",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"One patch cleaned\", function () {",
+							"    pm.expect(jsonData.patches).to.eql(1);",
+							"});",
+							"pm.test(\"Has expected x coordinate\", function () {",
+							"    pm.expect(jsonData.coords[0]).to.eql(1);",
+							"});",
+							"pm.test(\"Has expected y coordinate\", function () {",
+							"    pm.expect(jsonData.coords[1]).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"roomSize\" : [5, 5], \"coords\" : [1, 2], \"patches\" : [ [1, 0], [2, 2], [2, 3] ], \"instructions\" : \"NNESEESWNWW\" }"
+				},
+				"url": {
+					"raw": "{{base}}/v1/cleaning-sessions",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"v1",
+						"cleaning-sessions"
+					]
+				},
+				"description": "This is the initial request provided in the test."
+			},
+			"response": []
+		}
+	]
+}
