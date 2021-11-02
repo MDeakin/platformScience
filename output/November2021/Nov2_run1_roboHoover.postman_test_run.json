@@ -1,0 +1,2227 @@
+{
+	"id": "f1746c85-54c5-486d-af41-f22738e9c964",
+	"name": "roboHoover",
+	"timestamp": "2021-11-02T16:54:31.683Z",
+	"collection_id": "25974-3c7a0fd0-e1f6-4b45-8e73-6c9dfb097183",
+	"folder_id": 0,
+	"environment_id": "09ffa6f2-284d-4c0f-9eb2-aeabadf9dd7f",
+	"totalPass": 160,
+	"totalFail": 29,
+	"results": [
+		{
+			"id": "460e53af-5b2c-4076-9bd0-88ce335ac877",
+			"name": "Can I GET?",
+			"url": "http://localhost:8080/v1/sessions",
+			"time": 9,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 404": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "ad77741d-4623-4719-aa55-3cf2e6d28fbf",
+			"name": "Can I POST?",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "79b2811f-6b7e-44c7-9cc0-1559bb259145",
+			"name": "Can I PUT?",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed"
+			},
+			"tests": {
+				"Status code is 405": true,
+				"Response time is less than 100ms": true,
+				"Has expected message": true
+			},
+			"testPassFailCounts": {
+				"Status code is 405": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 405": true,
+					"Response time is less than 100ms": true,
+					"Has expected message": true
+				}
+			]
+		},
+		{
+			"id": "79d26122-5979-4150-9bc7-f25402054878",
+			"name": "Can I DELETE?",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 5,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed"
+			},
+			"tests": {
+				"Status code is 405": true,
+				"Response time is less than 100ms": true,
+				"Has expected message": true
+			},
+			"testPassFailCounts": {
+				"Status code is 405": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 405": true,
+					"Response time is less than 100ms": true,
+					"Has expected message": true
+				}
+			]
+		},
+		{
+			"id": "d8950f5c-1afa-4e21-b084-5986d339ec04",
+			"name": "Start in SW corner of a 10x10 room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "8097c578-96e6-48c6-8f08-cdd770899c7f",
+			"name": "Start in the NE corner of a 10x10 room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": true,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": true,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "9d86136a-9426-4aaa-a545-dfbb9fdcf52b",
+			"name": "Start in the center of a 5x5 room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "48d87c96-5ca9-4986-a2e5-763f103f99c6",
+			"name": "Start near the NW corner of a 13x1 room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": true,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": true,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "db5b56e8-e45b-46a5-911c-1a4931f991f7",
+			"name": "Start in the SE corner of a small room, circle it twice",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "53955808-1dda-4b7f-a2a2-c65f4021763c",
+			"name": "Bumps into the North wall once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "382d08fc-8195-40d6-9fed-af0eda8a3a0b",
+			"name": "Bumps into the East wall once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "e4510655-dd0c-475e-931e-ebc5e3b49924",
+			"name": "Bumps into the South wall once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "e6da32f3-f473-4bd8-89ba-18e45ff4f386",
+			"name": "Bumps into the West wall once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "ea3130e5-a991-45d3-a61e-a35fa23e8e53",
+			"name": "Bumps into the North wall three times",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "bffa393a-2c69-431c-b8a8-56a91e790c48",
+			"name": "Bumps the center of each wall once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "b4ea18c9-3d4f-4117-b51d-55234a357986",
+			"name": "Specify one patch, pass over it once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "8a89f01d-3efb-4f93-8280-476e0e1af8d4",
+			"name": "Specify two patches, pass over each of them once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "7ba6a8ee-915d-46e6-88fc-766d702901d1",
+			"name": "Reverse the order of the 2 patches, pass over each of them once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Two patches cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Two patches cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Two patches cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "bd98d953-5757-4ab5-996c-eca8e78ea830",
+			"name": "Cleaning the same patch twice only counts once",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "80a17a92-be82-4ef8-8f23-877ac2f76d40",
+			"name": "Specify same patch thrice, then pass over it",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "e3d04e83-5ca8-4eb0-ab95-c35fa52f7a67",
+			"name": "Does a starting patch get cleaned?",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "ae5a7efa-1e37-4d56-af02-4de5408d9a0a",
+			"name": "Missing instructions",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "4ad453af-ef52-4e9d-b844-e00b5e93ef6e",
+			"name": "Missing patches",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "01130d1a-81cc-4328-93b5-5141a93fff0f",
+			"name": "Missing coords",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "9eded6ba-ad39-434e-83aa-e09fdc103fc5",
+			"name": "Missing roomSize",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 18,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "4bb09621-aa25-441f-827a-c90e17c1f493",
+			"name": "Float",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Has expected x coordinate": false,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected x coordinate": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Has expected x coordinate": false,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "e73a3b1c-81ea-40b8-bd17-36e49e2a2174",
+			"name": "String",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "31cb2932-1582-4c34-a9fa-06666e1924ca",
+			"name": "Non-cardinal directions",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "a01c4c86-3681-4364-b430-58bbf0236089",
+			"name": "Complex (large)",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Zero patches cleaned": true,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Zero patches cleaned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Zero patches cleaned": true,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "93b737f3-a2ba-411a-8519-fe32b8fcf4f6",
+			"name": "List",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "c3e78633-8af8-47ec-8c3d-25b359af1b7b",
+			"name": "Negative numbers",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "b22b259f-1b7a-4f1d-aff3-533878065ad2",
+			"name": "Tuple",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "b6495cc6-696e-4d61-9a3e-ea2e8275ca80",
+			"name": "Send unexpected element in request payload",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "2397e14a-635a-469a-9182-9d6692b94df9",
+			"name": "SQL injection",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "502c6dbd-8405-4e22-b359-1efc8c0887dc",
+			"name": "Starting coords are outside of the room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 406": false,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 406": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 406": false,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "9c1a14c6-983f-4089-8a50-4ebda87c758a",
+			"name": "Specify dirt patches outside of the room",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "4c7aee56-f882-489d-8c1e-62042553952b",
+			"name": "Find x dimension limit of room size",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "dc2028d4-c96b-4687-a10f-9b18a3886675",
+			"name": "App traverses a very long path",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 38,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "45d38739-3970-4c5f-afcc-5dd9c0e61580",
+			"name": "Fill a 5x5 room with dirt then clean it all up",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Twenty five patches were cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Twenty five patches were cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Twenty five patches were cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		},
+		{
+			"id": "67a60264-143b-49ff-a5cd-c73e94f2aaca",
+			"name": "Random room size",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 200": false,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": false,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "b2dc2269-d44a-4ff0-aad2-ecd216c30834",
+			"name": "Random starting point",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Has expected x coordinate": false,
+				"Has expected y coordinate": false
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected x coordinate": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected y coordinate": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Has expected x coordinate": false,
+					"Has expected y coordinate": false
+				}
+			]
+		},
+		{
+			"id": "d69ef72c-aa1a-45c5-9cdd-caddbec4ccb9",
+			"name": "Time checker (WIP)",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 10,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true,
+				"Response time is less than 100ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 100ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 500": true,
+					"Response time is less than 100ms": true
+				}
+			]
+		},
+		{
+			"id": "a5b002c9-d8a4-493f-9732-713788db8cf0",
+			"name": "Baseline example from code test (Provided by Test)",
+			"url": "http://localhost:8080/v1/cleaning-sessions",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 200ms": true,
+				"One patch cleaned": false,
+				"Has expected x coordinate": true,
+				"Has expected y coordinate": true,
+				"Content-Type is JSON": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"One patch cleaned": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Has expected x coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has expected y coordinate": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is JSON": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 200ms": true,
+					"One patch cleaned": false,
+					"Has expected x coordinate": true,
+					"Has expected y coordinate": true,
+					"Content-Type is JSON": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 342,
+	"collection": {
+		"requests": [
+			{
+				"id": "460e53af-5b2c-4076-9bd0-88ce335ac877",
+				"method": "GET"
+			},
+			{
+				"id": "ad77741d-4623-4719-aa55-3cf2e6d28fbf",
+				"method": "POST"
+			},
+			{
+				"id": "79b2811f-6b7e-44c7-9cc0-1559bb259145",
+				"method": "PUT"
+			},
+			{
+				"id": "79d26122-5979-4150-9bc7-f25402054878",
+				"method": "DELETE"
+			},
+			{
+				"id": "d8950f5c-1afa-4e21-b084-5986d339ec04",
+				"method": "POST"
+			},
+			{
+				"id": "8097c578-96e6-48c6-8f08-cdd770899c7f",
+				"method": "POST"
+			},
+			{
+				"id": "9d86136a-9426-4aaa-a545-dfbb9fdcf52b",
+				"method": "POST"
+			},
+			{
+				"id": "48d87c96-5ca9-4986-a2e5-763f103f99c6",
+				"method": "POST"
+			},
+			{
+				"id": "db5b56e8-e45b-46a5-911c-1a4931f991f7",
+				"method": "POST"
+			},
+			{
+				"id": "53955808-1dda-4b7f-a2a2-c65f4021763c",
+				"method": "POST"
+			},
+			{
+				"id": "382d08fc-8195-40d6-9fed-af0eda8a3a0b",
+				"method": "POST"
+			},
+			{
+				"id": "e4510655-dd0c-475e-931e-ebc5e3b49924",
+				"method": "POST"
+			},
+			{
+				"id": "e6da32f3-f473-4bd8-89ba-18e45ff4f386",
+				"method": "POST"
+			},
+			{
+				"id": "ea3130e5-a991-45d3-a61e-a35fa23e8e53",
+				"method": "POST"
+			},
+			{
+				"id": "bffa393a-2c69-431c-b8a8-56a91e790c48",
+				"method": "POST"
+			},
+			{
+				"id": "b4ea18c9-3d4f-4117-b51d-55234a357986",
+				"method": "POST"
+			},
+			{
+				"id": "8a89f01d-3efb-4f93-8280-476e0e1af8d4",
+				"method": "POST"
+			},
+			{
+				"id": "7ba6a8ee-915d-46e6-88fc-766d702901d1",
+				"method": "POST"
+			},
+			{
+				"id": "bd98d953-5757-4ab5-996c-eca8e78ea830",
+				"method": "POST"
+			},
+			{
+				"id": "80a17a92-be82-4ef8-8f23-877ac2f76d40",
+				"method": "POST"
+			},
+			{
+				"id": "e3d04e83-5ca8-4eb0-ab95-c35fa52f7a67",
+				"method": "POST"
+			},
+			{
+				"id": "ae5a7efa-1e37-4d56-af02-4de5408d9a0a",
+				"method": "POST"
+			},
+			{
+				"id": "4ad453af-ef52-4e9d-b844-e00b5e93ef6e",
+				"method": "POST"
+			},
+			{
+				"id": "01130d1a-81cc-4328-93b5-5141a93fff0f",
+				"method": "POST"
+			},
+			{
+				"id": "9eded6ba-ad39-434e-83aa-e09fdc103fc5",
+				"method": "POST"
+			},
+			{
+				"id": "4bb09621-aa25-441f-827a-c90e17c1f493",
+				"method": "POST"
+			},
+			{
+				"id": "e73a3b1c-81ea-40b8-bd17-36e49e2a2174",
+				"method": "POST"
+			},
+			{
+				"id": "31cb2932-1582-4c34-a9fa-06666e1924ca",
+				"method": "POST"
+			},
+			{
+				"id": "a01c4c86-3681-4364-b430-58bbf0236089",
+				"method": "POST"
+			},
+			{
+				"id": "93b737f3-a2ba-411a-8519-fe32b8fcf4f6",
+				"method": "POST"
+			},
+			{
+				"id": "c3e78633-8af8-47ec-8c3d-25b359af1b7b",
+				"method": "POST"
+			},
+			{
+				"id": "b22b259f-1b7a-4f1d-aff3-533878065ad2",
+				"method": "POST"
+			},
+			{
+				"id": "b6495cc6-696e-4d61-9a3e-ea2e8275ca80",
+				"method": "POST"
+			},
+			{
+				"id": "2397e14a-635a-469a-9182-9d6692b94df9",
+				"method": "POST"
+			},
+			{
+				"id": "502c6dbd-8405-4e22-b359-1efc8c0887dc",
+				"method": "POST"
+			},
+			{
+				"id": "9c1a14c6-983f-4089-8a50-4ebda87c758a",
+				"method": "POST"
+			},
+			{
+				"id": "4c7aee56-f882-489d-8c1e-62042553952b",
+				"method": "POST"
+			},
+			{
+				"id": "dc2028d4-c96b-4687-a10f-9b18a3886675",
+				"method": "POST"
+			},
+			{
+				"id": "45d38739-3970-4c5f-afcc-5dd9c0e61580",
+				"method": "POST"
+			},
+			{
+				"id": "67a60264-143b-49ff-a5cd-c73e94f2aaca",
+				"method": "POST"
+			},
+			{
+				"id": "b2dc2269-d44a-4ff0-aad2-ecd216c30834",
+				"method": "POST"
+			},
+			{
+				"id": "d69ef72c-aa1a-45c5-9cdd-caddbec4ccb9",
+				"method": "POST"
+			},
+			{
+				"id": "a5b002c9-d8a4-493f-9732-713788db8cf0",
+				"method": "POST"
+			}
+		]
+	}
+}

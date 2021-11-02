@@ -1,8 +1,8 @@
-# platformScience
-Code test for Platform Science.  Tests a robotic hoover application.
+# Platform Science code test
+Tests a robotic hoover application.
 User defines the room size, starting position, dirt patch locations, and the route. The application responds with the number of dirt patches cleaned and the ending position.
 
-Tests author: Matt Deakin
+Test Author: Matt Deakin
 https://github.com/MDeakin
 
 Original code test:
@@ -12,7 +12,8 @@ You must spin up the service locally using the instructions contained in the bit
 
 # API Documentation:
 - https://documenter.getpostman.com/view/25974/UVByKWTo
-
+# Test report:
+- https://docs.google.com/spreadsheets/d/18Hgi1HyYOJaaPA-Qw6686-jNEwTLGRlTF4xtzY184uU/edit?usp=sharing
 # Running tests via Postman:
 - Download the current version of Postman (skip if you already have it):
   - https://www.postman.com/downloads/
@@ -27,7 +28,8 @@ You must spin up the service locally using the instructions contained in the bit
   - You can find help using the collection runner here:
     - https://learning.postman.com/docs/running-collections/intro-to-collection-runs/
 
-# Running the tests using codeceptJS
+# CodeceptJS sandbox learning exercise (you can skip this, I just included it to satisfy my curiosity)
+Spinning up codecetJS in order to learn the framework
 
 # Requirements:
 - Node
@@ -37,9 +39,13 @@ You must spin up the service locally using the instructions contained in the bit
 ```
 npx create-codeceptjs .
 ```
-# Run:
+# Build:
 ```
 npx codeceptjs init
+```
+# Run your test:
+```
+npx codeceptjs run
 ```
 
 # Other:
